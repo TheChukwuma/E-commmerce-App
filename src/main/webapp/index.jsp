@@ -28,10 +28,6 @@
         h4 {
             color: #5c209a;
         }
-
-        img {
-
-        }
     </style>
 </head>
 <body>
@@ -53,8 +49,7 @@
                                 <h6 class="card-title">Product: <%= product.getName()%></h6>
                                 <h6 class="price">Price: $<%=product.getPrice()%> </h6>
                                 <h6 class="category">Category: <%=product.getCategory()%></h6>
-                                <div class="mt-3 d-flex justify-content-around">
-                                    <a href="#" style="margin: 2px" class="btn btn-primary">Buy Now</a>
+                                <div class="mt-3 d-flex text-centre justify-content-around">
                                     <a href="AddToCartServlet?id=<%=product.getId()%>" style="margin: 2px" class="btn btn-dark">Add to Cart</a>
                                     <a href="#" style="margin: 2px" class="btn btn-primary">Like</a>
                                 </div>

@@ -27,13 +27,7 @@
     <%@include file="includes/header.jsp"%>
     <meta charset="utf-8">
     <style>
-        h4 {
-            color: #5c209a;
-        }
-
-        img {
-
-        }
+        h4 {color: #5c209a;}
     </style>
 </head>
 <body>
@@ -57,7 +51,6 @@
                                 <h6 class="price">Price: $<%=product.getPrice()%> </h6>
                                 <h6 class="category">Category: <%=product.getCategory()%></h6>
                                 <div class="mt-3 d-flex justify-content-around">
-                                    <a href="#" style="margin: 2px" class="btn btn-primary">Buy Now</a>
                                     <a href="AddToCartServlet?id=<%=product.getId()%>" style="margin: 2px" class="btn btn-dark">Add to Cart</a>
                                     <a href="#" style="margin: 2px" class="btn btn-primary">Like</a>
                                 </div>
