@@ -1,5 +1,6 @@
 <%@ page import="com.chukwuma.commerceweb.model.Cart" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.chukwuma.commerceweb.util.DBConnection" %><%--
   Created by IntelliJ IDEA.
   User: decagon
   Date: 09/08/2022
@@ -57,6 +58,7 @@
         </div>
     </div>
 </div>
+<%out.println(DBConnection.getConnection());%>
 
 <%@include file="includes/footer.jsp"%>
 <script>

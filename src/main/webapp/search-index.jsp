@@ -10,18 +10,20 @@
 
 
 <%
-    ProductDAO pd = new ProductDAO(DBConnection.getConnection());
-    List<Product> productList = pd.getAllProductsInStore();
+//    ProductDAO pd = new ProductDAO(DBConnection.getConnection());
+    List<Product> productList = (List<Product>) session.getAttribute("search");
 
-    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-    if (cart_list != null){
-        request.setAttribute("cart_list", cart_list);
-    }
+
+
+//    ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+//    if (cart_list != null){
+//        request.setAttribute("cart_list", cart_list);
+//    }
 %>
 <!doctype html>
 <html lang="en">
 <head>
-    <title>HOME PAGE</title>
+    <title>SEARCH PAGE</title>
     <%@include file="includes/header.jsp"%>
     <meta charset="utf-8">
     <style>
@@ -40,11 +42,12 @@
 <br>
 <div class="container">
     <h4>Babbage Sound And Audio Reinforcements</h4>
-    <div class="card-header my-3">All Products</div>
+    <%
+        if (!productList.isEmpty()){ %>
+
+    <div class="card-header my-3" >Search Results: <span style="color: dodgerblue" ><%=productList.size()%> items found! &#128519</span></div>
     <div class="row my-3">
-        <%
-            if (!productList.isEmpty()){
-                for (Product product : productList){ %>
+        <% for (Product product : productList){ %>
                     <div class="col-md-3 my-3 mx-3 justify-content-between">
                         <div class="card w-150" style="width: 18rem;">
                             <img class="card-img-top-centre" src="product-images/<%= product.getImage()%>" alt="Card image cap">
@@ -62,7 +65,11 @@
                         </div>
                     </div>
             <%  }
-            } %>
+            } else {
+                %>
+                <h6 style="color: crimson"> &#128532 OOPS! No item found </h6>
+        <% }
+        %>
     </div>
 </div>
 

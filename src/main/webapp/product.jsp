@@ -52,6 +52,11 @@
                     <label>Quantity</label>
                     <input type="number" class="form-control" name="product-quantity" placeholder="Product Quantity" required>
                 </div>
+                <div class="form-group">
+                    <label>Image</label>
+                    <input type="text" class="form-control" name="image" placeholder="Image name" required>
+                </div>
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">ADD</button>
                 </div>

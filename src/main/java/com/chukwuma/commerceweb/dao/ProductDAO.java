@@ -16,21 +16,14 @@ public class ProductDAO {
     private Connection connection;
     private PreparedStatement pst;
     private ResultSet resultSet;
-    private static final String INSERT_PRODUCTS_SQL = "INSERT INTO products" +
-            " (name, category, price, quantity) VALUES" +
-            " (?,?,?,?);";
+    private static final String INSERT_PRODUCTS_SQL = "INSERT INTO products (name, category, price, quantity) VALUES (?,?,?,?);";
     private static final String SELECT_ALL_PRODUCTS = "SELECT * FROM myproducts";
-    private static final String SELECT_PRODUCTS_BY_NAME = "SELECT id, name, category, price FROM" +
-            " products WHERE name =? ";
-    private static final String SELECT_ALL_PRODUCTS_BY_CATEGORY = "SELECT * FROM products WHERE category = ?";
-    private static final String DELETE_PRODUCTS_SQL = "DELETE FROM products WHERE name = ?;";
-    private static final String UPDATE_PRODUCTS_PRICE_SQL = "UPDATE products SET price = ? WHERE name = ?;";
-    private static final String UPDATE_PRODUCTS_QTY_SQL = "UPDATE products SET quantity = ? WHERE name = ?;";
+    private static final String SELECT_PRODUCTS_BY_NAME_OR_CATEGORY = "SELECT * FROM myproducts WHERE name LIKE ? OR category LIKE ?";
+    private static final String SELECT_ALL_PRODUCTS_BY_CATEGORY = "SELECT * FROM myproducts WHERE category = ?";
+    private static final String DELETE_PRODUCTS_SQL = "DELETE FROM myproducts WHERE name = ?;";
+    private static final String UPDATE_PRODUCTS_PRICE_SQL = "UPDATE myproducts SET price = ? WHERE name = ?;";
+    private static final String UPDATE_PRODUCTS_QTY_SQL = "UPDATE myproducts SET quantity = ? WHERE name = ?;";
 
-    //insert
-    //update
-    //delete
-    //VIEW PRODUCT IN A CATEGORY AND AS ONLY ONE PRODUCT
     public ProductDAO(Connection connection) {
         this.connection = connection;
     }
@@ -122,7 +115,6 @@ public class ProductDAO {
     public HashMap<String, List<Product>> getAllProducts(String category) {
         HashMap<String, List<Product>> productMap = new HashMap<>();
         List<Product> productList = new ArrayList<>();
-
         try {
             pst = this.connection.prepareStatement(SELECT_ALL_PRODUCTS_BY_CATEGORY);
             pst.setString(1, category);
@@ -143,12 +135,10 @@ public class ProductDAO {
             throw new RuntimeException(e);
         }
         return productMap;
-
     }
 
     public List<Product> getAllProductsInStore(){
         List<Product> productList = new ArrayList<>();
-
         try{
             pst = this.connection.prepareStatement(SELECT_ALL_PRODUCTS);
             resultSet = pst.executeQuery();
@@ -190,12 +180,35 @@ public class ProductDAO {
                     }
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return products;
+    }
+
+    public List<Product> searchByNameOrCategory(String searchTag){
+        List<Product> searchList = new ArrayList<>();
+        try{
+            pst = this.connection.prepareStatement(SELECT_PRODUCTS_BY_NAME_OR_CATEGORY);
+            pst.setString(1, "%"+searchTag+"%");
+            pst.setString(2, "%"+searchTag+"%");
+            resultSet = pst.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String category = resultSet.getString("category");
+                Double price = resultSet.getDouble("price");
+                Long qty = resultSet.getLong("quantity");
+                String image = resultSet.getString("image");
+                Product product = new Product(id, name, category, price, qty, image);
+                searchList.add(product);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return searchList;
     }
 
 

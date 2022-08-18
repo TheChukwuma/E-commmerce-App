@@ -26,6 +26,7 @@ public class ProductAddedServlet extends HttpServlet {
             String category = request.getParameter("product-category");
             Double price = Double.valueOf(request.getParameter("product-price"));
             Long quantity = Long.valueOf(request.getParameter("product-quantity"));
+            String img = request.getParameter("image");
             Product product = new Product(name, category, price, quantity);
             ProductDAO productDAO = new ProductDAO(DBConnection.getConnection());
             productDAO.insertProducts(product);
