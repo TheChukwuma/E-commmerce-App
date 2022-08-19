@@ -47,9 +47,9 @@ public class AdminDAO {
         return result;
     }
 
-    //The video named this method insert user
     public String adminSignUp(User user){
         int num = 0;
+        String result = "";
         try{
             pst = this.connection.prepareStatement(INSERT_ADMIN_USER_SQL);
             pst.setString(1, user.getFirst_name());
@@ -59,11 +59,13 @@ public class AdminDAO {
             pst.setString(5, user.getPhone_number());
             pst.setInt(6, user.getAdminID());
             num = pst.executeUpdate();
+            if (num > 0){result = "Registration Successful";}
+            else if (num == 0){result = "Registration Failed";}
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return "Registration Successful " + num;
+        return result;
     }
 
 }

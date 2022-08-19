@@ -2,14 +2,12 @@ package com.chukwuma.commerceweb.dao;
 
 import com.chukwuma.commerceweb.model.Cart;
 import com.chukwuma.commerceweb.model.Product;
-import com.chukwuma.commerceweb.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ProductDAO {
@@ -110,31 +108,6 @@ public class ProductDAO {
             throw new RuntimeException(e);
         }
         return result;
-    }
-
-    public HashMap<String, List<Product>> getAllProducts(String category) {
-        HashMap<String, List<Product>> productMap = new HashMap<>();
-        List<Product> productList = new ArrayList<>();
-        try {
-            pst = this.connection.prepareStatement(SELECT_ALL_PRODUCTS_BY_CATEGORY);
-            pst.setString(1, category);
-            resultSet = pst.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt(0);
-                String name = resultSet.getString("name");
-                Double price = resultSet.getDouble("price");
-                Long qty = resultSet.getLong("quantity");
-                String image = resultSet.getString("image");
-                Product product = new Product(id, name, category, price, qty, image);
-                productList.add(product);
-            }
-            productMap.put(category, productList);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return productMap;
     }
 
     public List<Product> getAllProductsInStore(){
